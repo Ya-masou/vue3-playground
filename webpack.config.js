@@ -10,6 +10,19 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "index-[hash].js"
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
+      }
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin()
   ]
