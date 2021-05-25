@@ -1,14 +1,25 @@
+const webpack = require("webpack")
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const { VueLoaderPlugin }= require("vue-loader")
 
 const isProd = process.env.NODE_ENV === "production"
+const srcDir = path.resolve(__dirname, "src")
+const distDir = path.resolve(__dirname, "dist")
 
 module.exports = {
   mode: isProd ? "production" : "development",
-  entry: path.resolve(__dirname, "src", "index.js"),
+  resolve: {
+    alias: {
+      "vue": "vue/dist/vue.esm-bundler.js",
+    },
+    extensions: [".js", ".vue"],
+  },
+  entry: path.resolve(srcDir, "index.js"),
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "index-[hash].js"
+    path: distDir,
+    filename: "index-[hash].js",
+    clean: true,
   },
   module: {
     rules: [
@@ -20,10 +31,22 @@ module.exports = {
             presets: ["@babel/preset-env"]
           }
         }
+      },
+      {
+        test: /\.vue$/,
+        use: { loader: "vue-loader" }
       }
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      title: "vue3 playground",
+      template: path.resolve(srcDir, "index.html.ejs"),
+    }),
+    new VueLoaderPlugin,
+    new webpack.DefinePlugin({
+      "__VUE_OPTIONS_API__": true,
+      "__VUE_PROD_DEVTOOLS__": false,
+    })
   ]
 }
