@@ -9,6 +9,7 @@ const distDir = path.resolve(__dirname, "dist")
 
 module.exports = {
   mode: isProd ? "production" : "development",
+  target: "web",
   resolve: {
     alias: {
       "vue": "vue/dist/vue.esm-bundler.js",
@@ -48,5 +49,8 @@ module.exports = {
       "__VUE_OPTIONS_API__": true,
       "__VUE_PROD_DEVTOOLS__": false,
     })
-  ]
+  ],
+  devServer: {
+    liveReload: true,
+  },
 }
