@@ -1,4 +1,6 @@
 <template>
-  <p>this is sample component</p>
+  <div>
+    <p>this is sample component</p>
+  </div>
 </template>
 

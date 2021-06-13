@@ -1,9 +1,12 @@
 import * as Vue from "vue"
-import Sample from "./components/Sample"
+import App from "./App"
+import router from "@/router"
 
 const app = Vue.createApp({
-  components: { Sample },
-  template: "<Sample />",
+  components: { App },
+  template: "<App />",
 })
+
+app.use(router)
 
 app.mount("#app")
